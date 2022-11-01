@@ -19,16 +19,8 @@ export const MULTICALL_ADDRESS: AddressMap = {
 }
 
 export const SWAP_ROUTER_ADDRESSES: AddressMap = {
-  ...constructSameAddressMap('0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45', [
-    SupportedChainId.OPTIMISM,
-    SupportedChainId.OPTIMISTIC_KOVAN,
-    SupportedChainId.ARBITRUM_ONE,
-    SupportedChainId.ARBITRUM_RINKEBY,
-    SupportedChainId.POLYGON,
-    SupportedChainId.POLYGON_MUMBAI,
-  ]),
-  [SupportedChainId.CELO]: '0x5615CDAb10dc425a742d643d949a7F474C01abc4',
-  [SupportedChainId.CELO_ALFAJORES]: '0x5615CDAb10dc425a742d643d949a7F474C01abc4',
+  [SupportedChainId.MAINNET]: '0x84f52Ee6a427a80D6f10cBd20Bc6b9402318b5b6',
+  [SupportedChainId.GOERLI]: '0x84f52Ee6a427a80D6f10cBd20Bc6b9402318b5b6',
 }
 
 export const ARGENT_WALLET_DETECTOR_ADDRESS: AddressMap = {
