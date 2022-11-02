@@ -1,6 +1,7 @@
 import { BaseQueryFn, createApi, SkipToken, skipToken } from '@reduxjs/toolkit/query/react'
 import { Protocol } from '@uniswap/router-sdk'
-import { Fraction, Percent, TradeType } from '@uniswap/sdk-core'
+import { Fraction, TradeType } from '@uniswap/sdk-core'
+import { DONATION_FEE_PERCENT, ONE_HUNDRED_PERCENT } from 'constants/misc'
 import ms from 'ms.macro'
 import qs from 'qs'
 import { isExactInput } from 'utils/tradeType'
@@ -28,7 +29,7 @@ const addFeeToQuote = (args: GetQuoteArgs, quote: GetQuoteResult): GetQuoteResul
       const step = route.at(-1)
       if (step && step.amountOut) {
         const amount = new Fraction(step.amountOut)
-        step.amountOut = amount.multiply(new Percent(95, 100)).toFixed(0)
+        step.amountOut = amount.multiply(ONE_HUNDRED_PERCENT.subtract(DONATION_FEE_PERCENT)).toFixed(0)
       }
       return route
     })
@@ -37,7 +38,7 @@ const addFeeToQuote = (args: GetQuoteArgs, quote: GetQuoteResult): GetQuoteResul
       const step = route.at(0)
       if (step && step.amountIn) {
         const amount = new Fraction(step.amountIn)
-        step.amountIn = amount.divide(new Percent(95, 100)).toFixed(0)
+        step.amountIn = amount.divide(ONE_HUNDRED_PERCENT.subtract(DONATION_FEE_PERCENT)).toFixed(0)
       }
       return route
     })

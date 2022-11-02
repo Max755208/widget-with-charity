@@ -1,13 +1,12 @@
-import { Currency, CurrencyAmount, Percent } from '@uniswap/sdk-core'
+import { Currency, CurrencyAmount } from '@uniswap/sdk-core'
+import { DONATION_FEE_PERCENT } from 'constants/misc'
 import { useUSDCValue } from 'hooks/useUSDCPrice'
 import { currencyId } from 'utils/currencyId'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 
-const DONATION_FEE = new Percent(5, 100)
-
 export const useFormattedDonationFeeAmount = (amount: CurrencyAmount<Currency>): string | undefined => {
   const currency = amount.currency
-  const fee = amount.multiply(DONATION_FEE)
+  const fee = amount.multiply(DONATION_FEE_PERCENT)
   const feeUSD = useUSDCValue(fee)
 
   if (fee.greaterThan(0)) {

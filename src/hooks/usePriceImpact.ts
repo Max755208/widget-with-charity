@@ -1,4 +1,5 @@
 import { Percent } from '@uniswap/sdk-core'
+import { DONATION_FEE_PERCENT } from 'constants/misc'
 import { useMemo } from 'react'
 import { InterfaceTrade } from 'state/routing/types'
 import { computeFiatValuePriceImpact } from 'utils/computeFiatValuePriceImpact'
@@ -20,7 +21,7 @@ export function usePriceImpact(trade?: InterfaceTrade) {
     if (!fiatPriceImpact && !marketPriceImpact) {
       return undefined
     }
-    const percent = largerPercentValue(marketPriceImpact, fiatPriceImpact)?.subtract(new Percent(5, 100))
+    const percent = largerPercentValue(marketPriceImpact, fiatPriceImpact)?.subtract(DONATION_FEE_PERCENT)
     return percent
       ? {
           percent,
