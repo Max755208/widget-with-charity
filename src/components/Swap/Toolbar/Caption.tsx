@@ -4,6 +4,7 @@ import Column from 'components/Column'
 import Rule from 'components/Rule'
 import Tooltip from 'components/Tooltip'
 import { loadingCss } from 'css/loading'
+import { useFormattedDonationFeeAmount } from 'hooks/useFormattedFeeAmount'
 import { PriceImpact } from 'hooks/usePriceImpact'
 import { AlertTriangle, Icon, Info, InlineSpinner } from 'icons'
 import { ReactNode, useCallback } from 'react'
@@ -107,6 +108,7 @@ export function Trade({
   outputUSDC?: CurrencyAmount<Currency>
   impact?: PriceImpact
 }) {
+  const feeAmount = useFormattedDonationFeeAmount(trade.inputAmount)
   return (
     <>
       <Tooltip placement="bottom" icon={impact?.warning ? AlertTriangle : Info}>
@@ -123,6 +125,7 @@ export function Trade({
         </Column>
       </Tooltip>
       <Price trade={trade} outputUSDC={outputUSDC} />
+      <ThemedText.Caption flexBasis="100%">{feeAmount} would be donated</ThemedText.Caption>
     </>
   )
 }

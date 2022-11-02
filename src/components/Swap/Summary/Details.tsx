@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import { CurrencyAmount, Token } from '@uniswap/sdk-core'
 import Column from 'components/Column'
 import Row from 'components/Row'
+import { useFormattedDonationFeeAmount } from 'hooks/useFormattedFeeAmount'
 import { PriceImpact } from 'hooks/usePriceImpact'
 import { Slippage } from 'hooks/useSlippage'
 import { useAtomValue } from 'jotai/utils'
@@ -49,9 +50,15 @@ export default function Details({ trade, slippage, gasUseEstimateUSD, impact }: 
   const outputCurrency = outputAmount.currency
   const integrator = window.location.hostname
   const feeOptions = useAtomValue(feeOptionsAtom)
+  const donationFeeAmount = useFormattedDonationFeeAmount(inputAmount)
 
   const details = useMemo(() => {
     const rows: Array<[string, string] | [string, string, Color | undefined]> = []
+
+    if (donationFeeAmount) {
+      rows.push([t`Donation amount`, donationFeeAmount])
+    }
+
     // @TODO(ianlapham): Check that provider fee is even a valid list item
 
     if (feeOptions) {
@@ -82,6 +89,7 @@ export default function Details({ trade, slippage, gasUseEstimateUSD, impact }: 
 
     return rows
   }, [
+    donationFeeAmount,
     feeOptions,
     gasUseEstimateUSD,
     impact,

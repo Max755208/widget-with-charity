@@ -60,7 +60,7 @@ function TransactionStatus({ tx, onClose }: TransactionStatusProps) {
     if (tx.info.type === TransactionType.SWAP) {
       return tx.receipt?.status ? <Trans>Swap confirmed</Trans> : <Trans>Swap pending</Trans>
     } else if (tx.info.type === TransactionType.WRAP) {
-      return tx.receipt?.status ? <Trans>Unwrap confirmed</Trans> : <Trans>Unwrap pending</Trans>
+      return tx.receipt?.status ? <Trans>Wrap confirmed</Trans> : <Trans>Wrap pending</Trans>
     } else if (tx.info.type === TransactionType.UNWRAP) {
       return tx.receipt?.status ? <Trans>Unwrap confirmed</Trans> : <Trans>Unwrap pending</Trans>
     }
