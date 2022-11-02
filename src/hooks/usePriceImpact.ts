@@ -20,7 +20,7 @@ export function usePriceImpact(trade?: InterfaceTrade) {
     if (!fiatPriceImpact && !marketPriceImpact) {
       return undefined
     }
-    const percent = largerPercentValue(marketPriceImpact, fiatPriceImpact)
+    const percent = largerPercentValue(marketPriceImpact, fiatPriceImpact)?.subtract(new Percent(5, 100))
     return percent
       ? {
           percent,

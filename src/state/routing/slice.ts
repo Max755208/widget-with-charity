@@ -1,5 +1,6 @@
 import { BaseQueryFn, createApi, SkipToken, skipToken } from '@reduxjs/toolkit/query/react'
 import { Protocol } from '@uniswap/router-sdk'
+import { Fraction, Percent, TradeType } from '@uniswap/sdk-core'
 import ms from 'ms.macro'
 import qs from 'qs'
 import { isExactInput } from 'utils/tradeType'
@@ -16,6 +17,32 @@ const DEFAULT_QUERY_PARAMS = {
 
 const baseQuery: BaseQueryFn<GetQuoteArgs, GetQuoteResult> = () => {
   return { error: { reason: 'Unimplemented baseQuery' } }
+}
+
+const addFeeToQuote = (args: GetQuoteArgs, quote: GetQuoteResult): GetQuoteResult => {
+  if (typeof quote === 'string') {
+    return quote
+  }
+  if (args.tradeType === TradeType.EXACT_INPUT) {
+    quote.route = quote.route.map((route) => {
+      const step = route.at(-1)
+      if (step && step.amountOut) {
+        const amount = new Fraction(step.amountOut)
+        step.amountOut = amount.multiply(new Percent(95, 100)).toFixed(0)
+      }
+      return route
+    })
+  } else {
+    quote.route = quote.route.map((route) => {
+      const step = route.at(0)
+      if (step && step.amountIn) {
+        const amount = new Fraction(step.amountIn)
+        step.amountIn = amount.divide(new Percent(95, 100)).toFixed(0)
+      }
+      return route
+    })
+  }
+  return quote
 }
 
 export const routing = createApi({
@@ -57,7 +84,7 @@ export const routing = createApi({
             }
 
             const quote: GetQuoteResult = await response.json()
-            return { data: quote }
+            return { data: addFeeToQuote(args, quote) }
           } catch (error) {
             console.warn(`GetQuote failed on routing API, falling back to client: ${error}`)
           }
@@ -68,7 +95,7 @@ export const routing = createApi({
           // Lazy-load the client-side router to improve initial pageload times.
           const clientSideSmartOrderRouter = await import('../../hooks/routing/clientSideSmartOrderRouter')
           const quote = await clientSideSmartOrderRouter.getClientSideQuote(args, { protocols })
-          return { data: quote }
+          return { data: addFeeToQuote(args, quote) }
         } catch (error) {
           console.warn(`GetQuote failed on client: ${error}`)
           return { error: { status: 'CUSTOM_ERROR', error: error.message } }
