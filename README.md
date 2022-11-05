@@ -1,16 +1,29 @@
-# Uniswap Labs Widgets
+# CharityDEX widget on top of Uniswap Labs Widget
 
-[![npm](https://img.shields.io/npm/v/@uniswap/widgets)](https://www.npmjs.com/package/@uniswap/widgets)
-[![Unit tests](https://github.com/Uniswap/interface/actions/workflows/test.yaml/badge.svg)](https://github.com/Uniswap/interface/actions/workflows/test.yaml)
-[![Integration tests](https://github.com/Uniswap/interface/actions/workflows/e2e.yaml/badge.svg)](https://github.com/Uniswap/interface/actions/workflows/e2e.yaml)
-[![Lint](https://github.com/Uniswap/interface/actions/workflows/lint.yml/badge.svg)](https://github.com/Uniswap/interface/actions/workflows/lint.yml)
-[![Crowdin](https://badges.crowdin.net/uniswap-interface/localized.svg)](https://crowdin.com/project/uniswap-interface)
+Added functionality of 5% donation to charity
+
+## Building and publishing package
+
+[Docs about packages on github](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages)
+
+```bash
+node -v
+# v16
+yarn
+yarn build
+# create classic access token on github and use it as password here
+yarn login --registry=https://npm.pkg.github.com --scope=@github_username
+# modify name and version in package.json according to scope
+yarn publish
+```
+
+# Uniswap Labs Widgets
 
 The `@uniswap/widgets` package is an [npm package](https://www.npmjs.com/package/@uniswap/widgets) of React components used to provide subsets of the Uniswap Protocol functionality in a small and configurable user interface element.
 
 # Uniswap Labs Swap Widget
 
-The Swap Widget bundles the whole swapping experience into a single React component that developers can easily embed in their app with one line of code. 
+The Swap Widget bundles the whole swapping experience into a single React component that developers can easily embed in their app with one line of code.
 
 ![swap widget screenshot](https://raw.githubusercontent.com/Uniswap/interface/main/src/assets/images/widget-screenshot.png)
 
@@ -23,6 +36,7 @@ Install the widgets library via `npm` or `yarn`.
 ```js
 yarn add @uniswap/widgets
 ```
+
 ```js
 npm i --save @uniswap/widgets
 ```
