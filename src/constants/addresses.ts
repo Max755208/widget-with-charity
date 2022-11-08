@@ -19,8 +19,8 @@ export const MULTICALL_ADDRESS: AddressMap = {
 }
 
 export const SWAP_ROUTER_ADDRESSES: AddressMap = {
-  [SupportedChainId.MAINNET]: '0x84f52Ee6a427a80D6f10cBd20Bc6b9402318b5b6',
-  [SupportedChainId.GOERLI]: '0x84f52Ee6a427a80D6f10cBd20Bc6b9402318b5b6',
+  [SupportedChainId.MAINNET]: '0x2FAdf7d0B7e9b9FCd0A0092336f2DD7Bb128D482',
+  [SupportedChainId.GOERLI]: '0xE2E26a93f51944176E867cD608D4A0278d897Af1',
 }
 
 export const ARGENT_WALLET_DETECTOR_ADDRESS: AddressMap = {
